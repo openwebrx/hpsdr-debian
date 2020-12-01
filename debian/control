@@ -1,0 +1,31 @@
+Source: golang-github-jancona-hpsdr
+Maintainer: Jakob Ketterl <jakob.ketterl@gmx.de>
+Uploaders: Jim Ancona <jim@anconafamily.com>
+Section: devel
+Testsuite: autopkgtest-pkg-go
+Priority: optional
+Build-Depends: debhelper-compat (= 12),
+               dh-golang,
+               golang-any
+Standards-Version: 4.5.0
+Vcs-Browser: https://salsa.debian.org/go-team/packages/golang-github-jancona-hpsdr
+Vcs-Git: https://salsa.debian.org/go-team/packages/golang-github-jancona-hpsdr.git
+Homepage: https://github.com/jancona/hpsdr
+Rules-Requires-Root: no
+XS-Go-Import-Path: github.com/jancona/hpsdr
+
+Package: golang-github-jancona-hpsdr-dev
+Architecture: all
+Depends: ${misc:Depends}
+Description: A Go library to support HPSDR radios including the Hermes-Lite 2 (library)
+ hpsdr - A Go library to support HPSDR radios including
+ the Hermes-Lite 2Limitations This is just a start on a real
+ HPSDR library, but it works for simple receive-only uses. See
+ https://github.com/jancona/hpsdrconnector for an example.
+ .
+ Current limitations include: * Only the original HPSDR Protocol
+ 1 is supported.  * It has only been tested with the Hermes-Lite 2
+ (https://github.com/softerhardware/Hermes-Lite2/wiki). Feel free to create
+ issues (https://github.com/jancona/hpsdr/issues) with reports of success
+ or failure using other hardware.  * Only one receiver is supported.
+ * Transmitting is not supported.  * The API is not yet stable.

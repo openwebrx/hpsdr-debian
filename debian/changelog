@@ -2,9 +2,8 @@ golang-github-jancona-hpsdr (0.4.0-1) UNRELEASED; urgency=low
 
   * multi-receiver support
   * new build for Debian Bullseye
-  * new build for Ubuntu Jammy Jellyfish
 
- -- Jakob Ketterl <jakob.ketterl@gmx.de>  Tue, 07 Sep 2021 16:43:00 +0000
+ -- Jakob Ketterl <jakob.ketterl@gmx.de>  Wed, 15 Jun 2022 00:16:00 +0000
 
 golang-github-jancona-hpsdr (0.2.0-2) hirsute; urgency=low
 

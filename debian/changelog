@@ -1,4 +1,4 @@
-golang-github-jancona-hpsdr (0.4.0-1) UNRELEASED; urgency=low
+golang-github-jancona-hpsdr (0.4.0-1) jammy; urgency=low
 
   * multi-receiver support
   * new build for Ubuntu Jammy Jellyfish

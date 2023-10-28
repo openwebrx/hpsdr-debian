@@ -1,8 +1,8 @@
-golang-github-jancona-hpsdr (0.5.0-1) UNRELEASE; urgency=low
+golang-github-jancona-hpsdr (0.6.0-1) UNRELEASE; urgency=low
 
-  * New upstream verison 0.5.0
+  * New upstream verison 0.6.0
 
- -- Jakob Ketterl <jakob.ketterl@gmx.de>  Sat, 28 Oct 2023 12:49:00 +0000
+ -- Jakob Ketterl <jakob.ketterl@gmx.de>  Sat, 28 Oct 2023 12:56:00 +0000
 
 golang-github-jancona-hpsdr (0.4.0-1) bullseye jammy; urgency=low
 

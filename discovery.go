@@ -49,6 +49,7 @@ const (
 	DeviceOrion2
 	DeviceHermesLite
 	DeviceHermesLite2
+	DevicePiSDR
 )
 
 // Device is a discovered network SDR
@@ -70,7 +71,7 @@ type Device struct {
 
 // DiscoverDevice finds an SDR devices at a particular address
 func DiscoverDevice(ip string) (*Device, error) {
-	devices, err := discoverProtocol1Address(protocol1PortSuffix, ip+protocol1PortSuffix)
+	devices, err := discoverProtocol1Address(":0", ip+protocol1PortSuffix)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +117,7 @@ func discoverProtocol1(ifa net.Interface, addrs []net.Addr, devices []*Device) (
 		var ad string
 		ip = ip.To4()
 		if ip != nil {
-			ad = ip.String() + protocol1PortSuffix
+			ad = ip.String() + ":0"
 			d, err := discoverProtocol1Address(ad, "255.255.255.255"+protocol1PortSuffix)
 			if err != nil {
 				continue
@@ -138,7 +139,7 @@ func discoverProtocol1Address(ifAddr string, bcAddr string) ([]*Device, error) {
 		return devices, err
 	}
 	defer conn.Close()
-	log.Print("[DEBUG] discoverProtocol1Address: Got connection", conn)
+	log.Printf("[DEBUG] discoverProtocol1Address: Listening on %v", addr)
 	found := make(chan Device)
 	go discoverReceive(conn, found)
 	// send discovery packet
@@ -185,13 +186,14 @@ func discoverReceive(
 	found chan Device,
 ) {
 	log.Print("[DEBUG] discoverReceive: starting")
-	conn.SetReadDeadline(time.Now().Add(1000 * time.Millisecond))
+	conn.SetReadDeadline(time.Now().Add(2000 * time.Millisecond))
 	for {
 		// Receiving a message
 		buffer := make([]byte, 2048)
 		l, rmAddr, err := conn.ReadFromUDP(buffer)
 		if err != nil {
 			if err, ok := err.(net.Error); ok && err.Timeout() {
+				log.Printf("[DEBUG] discoverReceive: timeout: %v", err)
 				break
 			} else {
 				log.Printf("[DEBUG] discoverReceive: error reading from UDP: %v", err)
@@ -228,10 +230,16 @@ func discoverReceive(
 					device.SupportedReceivers = 7
 					device.ADCs = 2
 				case oldDeviceHermesLite:
+					log.Printf("[DEBUG] discoverReceive: HermesLite version: %v", device.SoftwareVersion)
 					if device.SoftwareVersion < 42 {
 						device.Device = DeviceHermesLite
 						device.Name = "Hermes Lite"
 						device.SupportedReceivers = 2
+						device.ADCs = 1
+					} else if device.SoftwareVersion == 255 {
+						device.Device = DevicePiSDR
+						device.Name = "PiSDR"
+						device.SupportedReceivers = 1
 						device.ADCs = 1
 					} else {
 						device.Device = DeviceHermesLite2

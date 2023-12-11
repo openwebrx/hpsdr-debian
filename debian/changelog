@@ -1,6 +1,6 @@
-golang-github-jancona-hpsdr (0.7.0-1) UNRELEASED; urgency=low
+golang-github-jancona-hpsdr (0.8.0-1) UNRELEASED; urgency=low
 
-  * New upstream verison 0.7.0
+  * New upstream verison 0.8.0
 
 -- Jim Ancona <jim@anconafamily.com>  Thu, 09 Nov 2023 12:34:00 +0000
 

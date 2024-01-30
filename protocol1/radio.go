@@ -270,6 +270,8 @@ func (radio *Radio) Start() error {
 		if err != nil {
 			return fmt.Errorf("error opening UDP connection: %w", err)
 		}
+		// We expect a log of incoming traffic
+		radio.conn.SetReadBuffer(512 * 1024)
 	}
 	err = radio.sendMetisCommand(metisStop)
 	if err != nil {
@@ -564,8 +566,6 @@ func (radio *Radio) writeMessage(msg MetisMessage) error {
 
 // receiverIndex returns the ordinal index of the passed receiver, or -1 if the receiver is not valid
 func (radio *Radio) receiverIndex(rec *Receiver) int {
-	radio.receiverMutex.Lock()
-	defer radio.receiverMutex.Unlock()
 	for n, r := range radio.receivers {
 		if r == rec {
 			return n
